@@ -1,0 +1,152 @@
+Step: build-step-credential-initializer:
+
+{"level":"warn","ts":1548435290.760017,"logger":"fallback-logger","caller":"logging/config.go:65","msg":"Fetch GitHub commit ID from kodata failed: \"ref: refs/heads/test\" is not a valid GitHub commit ID"}
+{"level":"info","ts":1548435290.7605836,"logger":"fallback-logger","caller":"creds-init/main.go:40","msg":"Credentials initialized."}
+Step: build-step-git-source-0:
+
+{"level":"warn","ts":1548435291.70935,"logger":"fallback-logger","caller":"logging/config.go:65","msg":"Fetch GitHub commit ID from kodata failed: \"ref: refs/heads/test\" is not a valid GitHub commit ID"}
+{"level":"info","ts":1548435292.754191,"logger":"fallback-logger","caller":"git-init/main.go:92","msg":"Successfully cloned \"https://github.com/cb-kubecd/jx-brown-bag1.git\" @ \"31b89a546d0bf448fa0b338afc1513a549f16c76\" in path \"/workspace\""}
+Step: build-step-jenkins:
+
+Picked up _JAVA_OPTIONS: -Xmx400m
+Started
+Running in Durability level: PERFORMANCE_OPTIMIZED
+  20.376 [id=20]	WARNING	i.f.k.c.i.VersionUsageUtils#alert: The client is using resource type 'customresourcedefinitions' with unstable version 'v1beta1'
+[Pipeline] node
+Running on Jenkins in /tmp/jenkinsTests.tmp/jenkins6860718309771535263test/workspace/job
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Checkout SCM)
+[Pipeline] checkout
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withCredentials
+[Pipeline] {
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (CI Build and push snapshot)
+Stage "CI Build and push snapshot" skipped due to when conditional
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Build Release)
+[Pipeline] dir
+Running in /home/jenkins/go/src/github.com/cb-kubecd/jx-brown-bag1
+[Pipeline] {
+[Pipeline] git
+Cloning the remote Git repository
+Cloning repository https://github.com/cb-kubecd/jx-brown-bag1.git
+ > git init /home/jenkins/go/src/github.com/cb-kubecd/jx-brown-bag1 # timeout=10
+Fetching upstream changes from https://github.com/cb-kubecd/jx-brown-bag1.git
+ > git --version # timeout=10
+ > git fetch --tags --progress https://github.com/cb-kubecd/jx-brown-bag1.git +refs/heads/*:refs/remotes/origin/*
+ > git config remote.origin.url https://github.com/cb-kubecd/jx-brown-bag1.git # timeout=10
+ > git config --add remote.origin.fetch +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git config remote.origin.url https://github.com/cb-kubecd/jx-brown-bag1.git # timeout=10
+Fetching upstream changes from https://github.com/cb-kubecd/jx-brown-bag1.git
+ > git fetch --tags --progress https://github.com/cb-kubecd/jx-brown-bag1.git +refs/heads/*:refs/remotes/origin/*
+ > git rev-parse refs/remotes/origin/master^{commit} # timeout=10
+ > git rev-parse refs/remotes/origin/origin/master^{commit} # timeout=10
+Checking out Revision 31b89a546d0bf448fa0b338afc1513a549f16c76 (refs/remotes/origin/master)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 31b89a546d0bf448fa0b338afc1513a549f16c76
+ > git branch -a -v --no-abbrev # timeout=10
+ > git checkout -b master 31b89a546d0bf448fa0b338afc1513a549f16c76
+Commit message: "Merge pull request #1 from cb-kubecd/wip"
+First time build. Skipping changelog.
+[Pipeline] sh
++ jx-release-version
++ echo 0.0.2
+[Pipeline] sh
++ cat VERSION
++ jx step tag --version 0.0.2
+Tag v0.0.2 created and pushed to remote origin
+[Pipeline] sh
++ make build
+CGO_ENABLED=0 GO15VENDOREXPERIMENT=1 go build -ldflags '' -o bin/jx-brown-bag1 main.go
+[Pipeline] sh
++ cat VERSION
++ export VERSION=0.0.2
++ skaffold build -f skaffold.yaml
+time="2019-01-25T16:55:44Z" level=warning msg="config version (skaffold/v1beta2) out of date: upgrading to latest (skaffold/v1beta3)"
+Starting build...
+Building [changeme]...
+Sending build context to Docker daemon  525.8kBSending build context to Docker daemon  4.425MBSending build context to Docker daemon  6.502MB
+Step 1/4 : FROM scratch
+ ---> 
+Step 2/4 : EXPOSE 8080
+ ---> Using cache
+ ---> 93aad70508ac
+Step 3/4 : ENTRYPOINT /jx-brown-bag1
+ ---> Using cache
+ ---> c3e8461fcb10
+Step 4/4 : COPY ./bin/ /
+ ---> 912bd892a601
+Successfully built 912bd892a601
+The push refers to a repository [10.31.245.34:5000/cb-kubecd/jx-brown-bag1]
+ff7e490bc1f1: Preparing
+ff7e490bc1f1: Pushed
+0.0.2: digest: sha256:efeda13451176a07de40cc1b5cfc9548ec1d24a16c0c688a5dae96e24649acae size: 528
+Build complete in 1.510769486s
+Starting test...
+Test complete in 5.303µs
+changeme -> 10.31.245.34:5000/cb-kubecd/jx-brown-bag1:0.0.2
+[Pipeline] sh
++ cat VERSION
++ jx step post build --image 10.31.245.34:5000/cb-kubecd/jx-brown-bag1:0.0.2
+[Pipeline] }
+[Pipeline] // dir
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Promote to Environments)
+[Pipeline] dir
+Running in /home/jenkins/go/src/github.com/cb-kubecd/jx-brown-bag1/charts/jx-brown-bag1
+[Pipeline] {
+[Pipeline] sh
++ cat ../../VERSION
++ jx step changelog --version v0.0.2
+Using batch mode as inside a pipeline
+Generating change log from git ref 31b89a546d0bf448fa0b338afc1513a549f16c76 => bcf0f747d25c8ae1ed5cae7909655f2d226c3255
+Failed to enrich commits with issues: User.jenkins.io "" is invalid: metadata.name: Required value: name or generateName is required
+Failed to enrich commits with issues: User.jenkins.io "" is invalid: metadata.name: Required value: name or generateName is required
+Finding issues in commit messages using git format
+No release found for cb-kubecd/jx-brown-bag1 and tag v0.0.2 so creating a new release
+Updated the release information at https://github.com/cb-kubecd/jx-brown-bag1/releases/tag/v0.0.2
+generated: /home/jenkins/go/src/github.com/cb-kubecd/jx-brown-bag1/charts/jx-brown-bag1/templates/release.yaml
+Created Release jx-brown-bag1-0-0-2 resource in namespace jx
+Updating PipelineActivity cb-kubecd-jx-brown-bag1-master-2 with version 0.0.2
+Updated PipelineActivities cb-kubecd-jx-brown-bag1-master-2 with release notes URL: https://github.com/cb-kubecd/jx-brown-bag1/releases/tag/v0.0.2
+[Pipeline] sh
++ jx step helm release
+No $CHART_REPOSITORY defined so using the default value of: http://jenkins-x-chartmuseum:8080
+Adding missing Helm repo: jenkins-x http://chartmuseum.jenkins-x.io
+Successfully added Helm repository jenkins-x.
+Adding missing Helm repo: releases http://jenkins-x-chartmuseum:8080
+Successfully added Helm repository releases.
+No $CHART_REPOSITORY defined so using the default value of: http://jenkins-x-chartmuseum:8080
+Uploading chart file jx-brown-bag1-0.0.2.tgz to http://jenkins-x-chartmuseum:8080/api/charts
+Received 201 response: {"saved":true}
+[Pipeline] sh
++ cat ../../VERSION
++ jx promote -b --all-auto --timeout 1h --version 0.0.2
+prow based install so skip waiting for the merge of Pull Requests to go green as currently there is an issue with gettingstatuses from the PR, see https://github.com/jenkins-x/jx/issues/2410
+Promoting app jx-brown-bag1 version 0.0.2 to namespace jx-staging
+Created Pull Request: https://github.com/cb-kubecd/environment-jrawlings-dev9-staging/pull/6
+
+Failed to query the Pull Request last commit status for https://github.com/cb-kubecd/environment-jrawlings-dev9-staging/pull/6 ref 92120ff70cba3e582956e7b1718361f5784fcc8b Could not find a status for repository cb-kubecd/environment-jrawlings-dev9-staging with ref 92120ff70cba3e582956e7b1718361f5784fcc8b
+Pull Request https://github.com/cb-kubecd/environment-jrawlings-dev9-staging/pull/6 is merged at sha 2ca7f578227acc51f845af59bfe90d2dceccb076
+Pull Request merged but we are not waiting for the update pipeline to complete!
+[Pipeline] }
+[Pipeline] // dir
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // withCredentials
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS
